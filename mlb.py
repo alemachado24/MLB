@@ -185,7 +185,7 @@ def update_bar_chart(x):
     mask = df["prob1"] == x
     fig = px.histogram(df[mask], x="Results", y="prob1",
              color='Predicted', barmode='group',
-             histfunc='count',text_auto=True,
+             histfunc='count',#text_auto=True,
              height=400)
     return fig
 
