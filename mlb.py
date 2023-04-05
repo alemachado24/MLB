@@ -147,6 +147,24 @@ df_final.insert(1, 'Date', first_column)
 df_final['prob2'] = df_final['prob2']*100
 df_final['prob1'] = df_final['prob1']*100
 
+df_final['team1'] = df_final['team1'] .map({'HOU': 'Astros', 'LAD': 'Dodgers','ATL': 'Braves', 'NYY': 'Yankees',
+                                            'NYM': 'Mets', 'SD': 'Padres','TOR': 'Blue Jays', 'CLE': 'Guardians',
+                                            'TB': 'Rays', 'MIL': 'Brewers','STL': 'Cardinals', 'MIN': 'Twins',
+                                            'PHI': 'Phillies', 'LAA': 'Angels','SEA': 'Mariners', 'SF': 'Giants',
+                                            'TEX': 'Rangers', 'BOS': 'Red Sox','CHW': 'White Sox', 'MIA': 'Marlins',
+                                            'CHC': 'Cubs', 'BAL': 'Orioles','ARI': 'Diamondbacks', 'CIN': 'Reds',
+                                            'PIT': 'Pirates', 'COL': 'Rockies','DET': 'Tigers', 'KC': 'Royals',
+                                            'OAK': 'Athletics', 'WSH': 'Nationals'})
+
+df_final['team2'] = df_final['team2'] .map({'HOU': 'Astros', 'LAD': 'Dodgers','ATL': 'Braves', 'NYY': 'Yankees',
+                                            'NYM': 'Mets', 'SD': 'Padres','TOR': 'Blue Jays', 'CLE': 'Guardians',
+                                            'TB': 'Rays', 'MIL': 'Brewers','STL': 'Cardinals', 'MIN': 'Twins',
+                                            'PHI': 'Phillies', 'LAA': 'Angels','SEA': 'Mariners', 'SF': 'Giants',
+                                            'TEX': 'Rangers', 'BOS': 'Red Sox','CHW': 'White Sox', 'MIA': 'Marlins',
+                                            'CHC': 'Cubs', 'BAL': 'Orioles','ARI': 'Diamondbacks', 'CIN': 'Reds',
+                                            'PIT': 'Pirates', 'COL': 'Rockies','DET': 'Tigers', 'KC': 'Royals',
+                                            'OAK': 'Athletics', 'WSH': 'Nationals'})
+
 upcoming_games = df_final.loc[df_final['status']=='pre']
 past_games = df_final.loc[df_final['status']=='post']
 
