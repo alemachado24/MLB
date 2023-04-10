@@ -201,10 +201,15 @@ df_styled_html = upcoming_games_color.hide(axis=0).to_html()
 option1, option2 = st.columns(2)
 with option1:
     st.header('Upcoming Games')
-    st.text('')
-#     list_dates = sorted((upcoming_games['Date'],0))
-#     dates = st.selectbox('Date', list_dates)
-    st.dataframe(upcoming_games_color.hide(axis="index"))#set_index(df.columns[0])
+    list_dates =  upcoming_games['Date'].sort_values(ascending=True).unique()
+    dates = st.selectbox('Date', list_dates)
+    try:
+        filtered_dates = upcoming_games[(upcoming_games['Date']==dates)]
+        upcoming_games_color2 = filtered_dates.style.format(precision=0).applymap(highlight_green, subset=['prob1','prob2'])
+        st.dataframe(upcoming_games_color2)
+    except:
+        st.text('test')
+        st.dataframe(upcoming_games_color)
 with option2:
     st.header('Past Games')
     selected_team_full = st.multiselect('',team_names,default = team_names[5])
