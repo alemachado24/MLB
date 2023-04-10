@@ -204,7 +204,7 @@ with option1:
     filtered_dates = upcoming_games[(upcoming_games['Date']==dates)]
     upcoming_games_color2 = filtered_dates.style.format(precision=0).applymap(highlight_green, subset=['prob1','prob2'])
     st.text('test')
-        st.write(upcoming_games_color2.hide(axis=0).to_html(), unsafe_allow_html=True)
+    st.write(upcoming_games_color2.hide(axis=0).to_html(), unsafe_allow_html=True)
 #         st.dataframe(upcoming_games_color2)
 #     except:
 #         st.dataframe(upcoming_games_color)
