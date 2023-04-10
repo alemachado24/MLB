@@ -213,8 +213,10 @@ with option2:
     st.header('Past Games')
     selected_team_full = st.multiselect('',team_names,default = team_names[5])
     try:
-        filtered_both_teams = combined_list2[(combined_list2['team1']==selected_team_full[0]) | (combined_list2['team2']==selected_team_full[0])]
-        st.dataframe(filtered_both_teams)
+        filtered_dates = upcoming_games[(upcoming_games['Date']==dates)]
+        upcoming_games_color2 = filtered_dates.style.format(precision=0).applymap(highlight_green, subset=['prob1','prob2'])
+        st.write(upcoming_games_color2.hide(axis=0).to_html(), unsafe_allow_html=True)
+#         st.dataframe(upcoming_games_color2)
     except:
         st.dataframe(combined_list2)
 
