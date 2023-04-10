@@ -11,13 +11,13 @@ import plotly.express as px
 
 st.set_page_config(page_title="MLB", page_icon="⚾️",layout="wide",)
 
-st.sidebar.markdown("MLB Forecast ⚾️")
+st.markdown("MLB Forecast ⚾️")
 
 st.caption("This app performs simple webscraping of MLB player stats data")
 st.caption("Data Sources: fivethirtyeight Website")# and pro-basketball-reference
 
 #sidebar
-selected_year = st.sidebar.selectbox('Year', list(reversed(range(2020,2024))))
+selected_year = st.selectbox('Year', list(reversed(range(2020,2024))))
 
 team_names = ['Dodgers',
 'Astros',
@@ -49,6 +49,8 @@ team_names = ['Dodgers',
 'Royals',
 'Athletics',
 'Nationals']
+
+team_names.sort()
 
 # selected_team_full = st.multiselect('',team_names,default = team_names[25])
 
@@ -187,36 +189,47 @@ column_results=pd.DataFrame(new_analysis, columns=['Results'])
 column_predicted=pd.DataFrame(predicted, columns=['Predicted'])
 
 combined_list = pd.concat([past_games,column_results,column_predicted], axis=1)
-
 combined_list=combined_list.drop(['status'], axis=1)
+combined_list2=combined_list.sort_values(by=['Date'],ascending=False)
 
 groupped_scores = combined_list.groupby(['prob1','Results','Predicted']).size()
 
-st.header('Upcoming Games')
-st.dataframe(upcoming_games_color)
+df_styled_html = upcoming_games_color.hide(axis=0).to_html()
+# df_styled_html2=df_styled_html[(combined_list2['Date']==selected_team_full[0])]
+# st.write(df_styled_html, unsafe_allow_html=True)
 
-st.header('Past Games')
-st.dataframe(combined_list)
+option1, option2 = st.columns(2)
+with option1:
+    st.header('Upcoming Games')
+    st.text('')
+#     list_dates = sorted((upcoming_games['Date'],0))
+#     dates = st.selectbox('Date', list_dates)
+    st.dataframe(upcoming_games_color.hide(axis="index"))#set_index(df.columns[0])
+with option2:
+    st.header('Past Games')
+    selected_team_full = st.multiselect('',team_names,default = team_names[5])
+    try:
+        filtered_both_teams = combined_list2[(combined_list2['team1']==selected_team_full[0]) | (combined_list2['team2']==selected_team_full[0])]
+        st.dataframe(filtered_both_teams)
+    except:
+        st.dataframe(combined_list2)
 
 def update_bar_chart(x):
     df = combined_list #px.data.tips() # replace with your own data source
     mask = df["prob1"] == x
     fig = px.histogram(df[mask], x="Results", y="prob1",
+             color_discrete_sequence=["#000089"],
              color='Predicted', barmode='group',
              histfunc='count',#text_auto=True,
              height=400)
     return fig
 
-# fig = update_bar_chart(prob1)
 
-
-# st.plotly_chart(fig, theme="streamlit", use_container_width=True)
-
-st.header('Historic Probabilities')
-option1, option2 = st.columns(2)
-with option1:
+st.header('Historic Percentages')
+option3, option4 = st.columns(2)
+with option3:
     st.dataframe(groupped_scores)
-with option2:
+with option4:
     list_prob = round(combined_list['prob1'],0).sort_values(ascending=False).unique()
     prob1 = st.selectbox('Probability', list_prob)
     fig = update_bar_chart(prob1)
