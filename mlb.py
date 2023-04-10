@@ -194,9 +194,6 @@ combined_list2=combined_list.sort_values(by=['Date'],ascending=False)
 
 groupped_scores = combined_list.groupby(['prob1','Results','Predicted']).size()
 
-df_styled_html = upcoming_games_color.hide(axis=0).to_html()
-# df_styled_html2=df_styled_html[(combined_list2['Date']==selected_team_full[0])]
-# st.write(df_styled_html, unsafe_allow_html=True)
 
 option1, option2 = st.columns(2)
 with option1:
@@ -206,6 +203,7 @@ with option1:
     try:
         filtered_dates = upcoming_games[(upcoming_games['Date']==dates)]
         upcoming_games_color2 = filtered_dates.style.format(precision=0).applymap(highlight_green, subset=['prob1','prob2'])
+        st.text('test')
         st.write(upcoming_games_color2.hide(axis=0).to_html(), unsafe_allow_html=True)
 #         st.dataframe(upcoming_games_color2)
     except:
