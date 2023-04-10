@@ -172,13 +172,13 @@ past_games = df_final.loc[df_final['status']=='post']
 
 upcoming_games=upcoming_games.drop(['status','score1','score2'], axis=1)
 
-def color_negative_red(val):
+def highlight_green(val):
     '''
     highlight the maximum in a Series yellow.
     '''
     color = 'lightgreen' if str(val) > str(65) else 'white'
     return 'background-color: %s' % color
-upcoming_games_color = upcoming_games.style.format(precision=0).applymap(color_negative_red, subset=['prob1','prob2'])
+upcoming_games_color = upcoming_games.style.format(precision=0).applymap(highlight_green, subset=['prob1','prob2'])
 
 
 predicted = np.where((((past_games['score1']>past_games['score2']) & (past_games['prob1']>past_games['prob2'])) | ((past_games['score1']<past_games['score2']) & (past_games['prob1']<past_games['prob2']))) , 'Predicted', 'Turnaround')
@@ -200,14 +200,14 @@ with option1:
     st.header('Upcoming Games')
     list_dates =  upcoming_games['Date'].sort_values(ascending=True).unique()
     dates = st.selectbox('Date', list_dates)
-#     try:
-    filtered_dates = upcoming_games[(upcoming_games['Date']==dates)]
-    upcoming_games_color2 = filtered_dates.style.format(precision=0).applymap(highlight_green, subset=['prob1','prob2'])
-    st.text('test')
-    st.write(upcoming_games_color2.hide(axis=0).to_html(), unsafe_allow_html=True)
+    try:
+      filtered_dates = upcoming_games[(upcoming_games['Date']==dates)]
+      upcoming_games_color2 = filtered_dates.style.format(precision=0).applymap(highlight_green, subset=['prob1','prob2'])
+#       st.text('test')
+      st.write(upcoming_games_color2.hide(axis=0).to_html(), unsafe_allow_html=True)
 #         st.dataframe(upcoming_games_color2)
-#     except:
-#         st.dataframe(upcoming_games_color)
+    except:
+        st.dataframe(upcoming_games_color)
 with option2:
     st.header('Past Games')
     selected_team_full = st.multiselect('',team_names,default = team_names[5])
