@@ -213,9 +213,11 @@ with option2:
     selected_team_full = st.multiselect('',team_names,default = team_names[5])
     try:
         filtered_both_teams = combined_list2[(combined_list2['team1']==selected_team_full[0]) | (combined_list2['team2']==selected_team_full[0])]
-        st.dataframe(filtered_both_teams)
+        filtered_both_teams2= filtered_both_teams.style.hide_index().format(precision=0)
+        st.write(filtered_both_teams2.hide(axis=0).to_html(), unsafe_allow_html=True)
     except:
-        st.dataframe(combined_list2)
+        combined_list22= combined_list2.style.hide_index().format(precision=0)
+        st.write(combined_list22.hide(axis=0).to_html(), unsafe_allow_html=True)
 
 def update_bar_chart(x):
     df = combined_list #px.data.tips() # replace with your own data source
