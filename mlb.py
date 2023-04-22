@@ -205,9 +205,10 @@ with option1:
       upcoming_games_color2 = filtered_dates.style.format(precision=0).applymap(highlight_green, subset=['prob1','prob2'])
 #       st.text('test')
 #       st.write(upcoming_games_color2.hide(axis=0).to_html(), unsafe_allow_html=True)
-        st.dataframe(upcoming_games_color2)
+      st.dataframe(upcoming_games_color2)
     except:
-        st.dataframe(upcoming_games_color)
+      
+      st.dataframe(upcoming_games_color)
 with option2:
     st.header('Past Games')
     selected_team_full = st.multiselect('',team_names,default = team_names[5])
